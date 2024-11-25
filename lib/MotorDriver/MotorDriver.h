@@ -25,7 +25,7 @@ class MotorDriver{
 
         void brake();
 
-        void applyLinePid(int correction, int base = 150, int max = 250);
+        void applyLinePid(int correction, int base = 138, int max = 250);
         
     private:
         int leftPWM;

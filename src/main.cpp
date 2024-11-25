@@ -127,7 +127,7 @@ void autoCalibrate(int loops = 2){
     
     initEncoder();
     while(leftEncoder < 150){
-      driver.turnLeft(60, 60);
+      driver.turnLeft(70, 70);
       frontQtr.calibrate();
       checkQtr.calibrate();
     }
@@ -135,7 +135,7 @@ void autoCalibrate(int loops = 2){
 
     initEncoder();
     while(leftEncoder < 280){
-      driver.turnRight(60, 60);
+      driver.turnRight(70, 70);
       frontQtr.calibrate();
       checkQtr.calibrate();
     }
@@ -143,7 +143,7 @@ void autoCalibrate(int loops = 2){
 
     initEncoder();
     while(leftEncoder < 150){
-      driver.turnLeft(60, 60);
+      driver.turnLeft(70, 70);
       frontQtr.calibrate();
       checkQtr.calibrate();
     }
@@ -169,10 +169,11 @@ int readTof() {
 
 void dottedLine(){
   int correction;
+  digitalWrite(A0,HIGH);
 
-  if(checkQtr.pattern == 'T' && absss(frontQtr.error) < 1500 ){
+  if(checkQtr.pattern == 'T' && absss(frontQtr.error) < 1000 ){
     
-    while(frontQtr.pattern != 'T'){
+    while(checkQtr.pattern == 'T'){
       checkQtr.read();
       frontQtr.read();
       driver.forward(230, 230);
@@ -224,7 +225,7 @@ void botSetup(){
 
   Serial.begin(9600);
 
-  autoCalibrate(1);
+  autoCalibrate(2);
   delay(200);
   beep(100);
   beep();
@@ -240,12 +241,13 @@ void botLoop() {
   checkQtr.read();
   frontQtr.read();
   
-  dottedLine();
+  //dottedLine();
+  digitalWrite(A0, LOW);
 
   int diff = checkQtr.position - frontQtr.position;
   int correction = 0;
 
-  int baseSpeed = 150;
+  int baseSpeed = 138;
   if(absss(diff) < 1500 && absss(frontQtr.error) < 1500){
     setLED1('G');
     setLED2('G');
@@ -255,7 +257,7 @@ void botLoop() {
   }else{
     setLED1('R');
     setLED2('R');
-    baseSpeed = 150;
+    baseSpeed = 138;
     correction = pid(frontQtr.error, 's');
 
   }

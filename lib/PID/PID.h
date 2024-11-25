@@ -3,11 +3,11 @@
 
 #endif //SLRC24_PID_H
 
-const double kPs = 0.033;
+const double kPs = 0.038;
 const double kIs = 0.0003;
 const double kDs = 0.33;
 
-const double kPf = 0.026;
+const double kPf = 0.031;
 const double kIf = 0.0003;
 const double kDf = 0.33;
 
